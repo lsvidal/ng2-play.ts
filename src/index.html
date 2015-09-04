@@ -8,12 +8,29 @@
 <body>
 <hello>Loading...</hello>
 </body>
+<script type="text/javascript">
+function checkRequire() {
+  console.log('Checking "require"');
+  if (window) {
+    if (window.require) {
+      console.log('Found function "require"');
+    } else {
+      console.log('Not found function "require"');
+    }
+  } else {
+    console.error('"window" not found');
+  }
+}
 
+console.log('Starting app');
+checkRequire();
+</script>
 <!-- ES6-related imports -->
 <script src="lib/traceur-runtime.js"></script>
 <script src="lib/system-csp-production.js"></script>
 
 <script>
+    checkRequire();
     //configure system loader
     System.config({defaultJSExtensions: true});
 </script>
@@ -22,6 +39,7 @@
 <script>
     //bootstrap the Angular2 application
     System.import('hello').catch(console.log.bind(console));
+    checkRequire();
 </script>
 
 </html>
