@@ -57,3 +57,23 @@ gulp.task('play', ['libs', 'html', 'js'], function () {
     });
 });
 
+gulp.task('watch', ['libs', 'html', 'js'], function() {
+  gulp.watch(PATHS.src.html, ['html']);
+  gulp.watch([PATHS.src.js, PATHS.typings], ['js']);
+});
+
+gulp.task('serve', ['libs', 'watch'], function () {
+    var http = require('http');
+    var connect = require('connect');
+    var serveStatic = require('serve-static');
+
+    var port = 9000, app;
+
+    gulp.watch(PATHS.src.html, ['html']);
+    gulp.watch(PATHS.src.js, ['js']);
+
+    app = connect().use(serveStatic(__dirname + '/dist'));  // serve everything that is static
+    http.createServer(app).listen(port, function () {
+        console.log('Server started at port ' + port);
+    });
+});
